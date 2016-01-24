@@ -45,7 +45,7 @@ def En(n1=1, n2=float('inf'), **kwargs):
                'cm^-1': (lambda x: x * 1e-2),
               }
     unit = kwargs.get('unit', 'eV')
-    if units not in rescale:
+    if unit not in rescale:
         raise KeyError('"' + unit + '" is not recognised as a suitable unit. See' +
                                ' docstring for unit list.')
     else:
