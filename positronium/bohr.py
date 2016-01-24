@@ -3,26 +3,29 @@ The Bohr model of positronium
 '''
 import positronium.constants as constants
 
-def En(n1, n2=float('inf'), **kwargs):
+def En(n1=1, n2=float('inf'), **kwargs):
     '''
-    Calculate the interval between energy levels n1 and n2 (default = infinity)
+    Calculate the interval between energy levels n1 and n2
     according to the Bohr model, i.e. the Rydberg formula.
     
-    Return the interval in units of:
-        energy (J, eV, meV, ueV),
-        frequency (Hz, kHz, MHz, GHz, THz, PHz, EHz),
-        wavelength (m, cm, mm, um, nm, A, pm, fm),
-        wavenumbers (m^-1, cm^-1). 
+    kwargs:
+        units:
+            J, eV, meV, ueV, au (Hartree),          [energy]
+            Hz, kHz, MHz, GHz, THz, PHz, EHz,       [frequency]
+            m, cm, mm, um, nm, A, pm, fm,           [vacuum wavelength]
+            m^-1, cm^-1.                            [wavenumber] 
 
-        Defaults:
-            units='nm'
+    defaults:
+        n1 = 1
+        n2 = infinty
+        units='eV'
+            
     '''
-    units = kwargs.get('units', 'nm')
-    En = (constants.Ryd_Ps) * (1.0/(n1**2) - 1.0/(n2**2))
-    rescale = {'J': (lambda x: x*constants.Planck*constants.c),
-               'eV': (lambda x: x*constants.Planck*constants.c/ constants.e),
-               'meV': (lambda x: x*constants.Planck*constants.c/ (constants.e * 1e-3)),
-               'ueV': (lambda x: x*constants.Planck*constants.c/ (constants.e * 1e-6)),
+    rescale = {'J': (lambda x: x*constants.h*constants.c),
+               'eV': (lambda x: x*constants.h*constants.c/ constants.e),
+               'meV': (lambda x: x*constants.h*constants.c/ (constants.e * 1e-3)),
+               'ueV': (lambda x: x*constants.h*constants.c/ (constants.e * 1e-6)),
+               'au': (lambda x: x / (2 * constants.Rydberg)),
                'Hz': (lambda x: x*constants.c),
                'kHz': (lambda x: x*constants.c / 1e3),
                'MHz': (lambda x: x*constants.c / 1e6),
@@ -41,4 +44,45 @@ def En(n1, n2=float('inf'), **kwargs):
                'm^-1': (lambda x: x),
                'cm^-1': (lambda x: x * 1e-2),
               }
-    return rescale[units](En)
+    units = kwargs.get('units', 'eV')
+    if units not in rescale:
+        raise KeyError('"' + units + '" is not recognised as a suitable unit. See' +
+                               ' docstring for unit list.')
+    else:
+        En = (constants.Ryd_Ps) * (1.0/(n1**2) - 1.0/(n2**2))
+        try:
+            result = rescale[units](En)
+        except ZeroDivisionError:
+            result = float('inf')
+        return result
+    
+def radius(n=1, **kwargs):
+    '''
+    Return n^2 * a_Ps, where a_Ps is the Bohr radius for positronium (2 * a_0). 
+    
+    kwargs:
+        units:
+            m, cm, mm, um, nm, A, pm, fm, (SI)
+            au (atomic units).
+    
+    defaults:
+        n = 1
+        units = 'm'
+    
+    '''
+    rescale = {'m': (lambda x: x),
+               'cm': (lambda x: x * 1e2),
+               'mm': (lambda x: x * 1e3),
+               'um': (lambda x: x * 1e6),
+               'nm': (lambda x: x * 1e9),
+               'A': (lambda x: x * 1e10),
+               'pm': (lambda x: x * 1e12),
+               'fm': (lambda x: x * 1e15), 
+               'au': (lambda x: x / constants.a_0)
+                }
+    units = kwargs.get('units', 'm')
+    if units not in rescale:
+        raise KeyError('"' + units + '" is not recognised as a suitable unit. See' +
+                               ' docstring for unit list.')
+    else:
+        return rescale[units](n**2 * constants.a_Ps)
