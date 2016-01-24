@@ -9,7 +9,7 @@ def En(n1=1, n2=float('inf'), **kwargs):
     according to the Bohr model, i.e. the Rydberg formula.
     
     kwargs:
-        units:
+        unit:
             J, eV, meV, ueV, au (Hartree),          [energy]
             Hz, kHz, MHz, GHz, THz, PHz, EHz,       [frequency]
             m, cm, mm, um, nm, A, pm, fm,           [vacuum wavelength]
@@ -17,8 +17,8 @@ def En(n1=1, n2=float('inf'), **kwargs):
 
     defaults:
         n1 = 1
-        n2 = infinty
-        units='eV'
+        n2 = infinity
+        unit='eV'
             
     '''
     rescale = {'J': (lambda x: x*constants.h*constants.c),
@@ -44,14 +44,14 @@ def En(n1=1, n2=float('inf'), **kwargs):
                'm^-1': (lambda x: x),
                'cm^-1': (lambda x: x * 1e-2),
               }
-    units = kwargs.get('units', 'eV')
+    unit = kwargs.get('unit', 'eV')
     if units not in rescale:
-        raise KeyError('"' + units + '" is not recognised as a suitable unit. See' +
+        raise KeyError('"' + unit + '" is not recognised as a suitable unit. See' +
                                ' docstring for unit list.')
     else:
         En = (constants.Ryd_Ps) * (1.0/(n1**2) - 1.0/(n2**2))
         try:
-            result = rescale[units](En)
+            result = rescale[unit](En)
         except ZeroDivisionError:
             result = float('inf')
         return result
@@ -61,13 +61,13 @@ def radius(n=1, **kwargs):
     Return n^2 * a_Ps, where a_Ps is the Bohr radius for positronium (2 * a_0). 
     
     kwargs:
-        units:
+        unit:
             m, cm, mm, um, nm, A, pm, fm, (SI)
             au (atomic units).
     
     defaults:
         n = 1
-        units = 'm'
+        unit = 'm'
     
     '''
     rescale = {'m': (lambda x: x),
@@ -80,9 +80,9 @@ def radius(n=1, **kwargs):
                'fm': (lambda x: x * 1e15), 
                'au': (lambda x: x / constants.a_0)
                 }
-    units = kwargs.get('units', 'm')
-    if units not in rescale:
-        raise KeyError('"' + units + '" is not recognised as a suitable unit. See' +
+    unit = kwargs.get('unit', 'm')
+    if unit not in rescale:
+        raise KeyError('"' + unit + '" is not recognised as a suitable unit. See' +
                                ' docstring for unit list.')
     else:
-        return rescale[units](n**2 * constants.a_Ps)
+        return rescale[unit](n**2 * constants.a_Ps)
