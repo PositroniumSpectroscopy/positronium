@@ -13,13 +13,13 @@ Package dependencies:
 
 via pip (recommended):
 
-'''
+```
 pip install positronium
-'''
+```
 
 ## About
 
-This package is designed to collate useful bits of code pertaining to the positronium atom
+This package is designed to collate useful bits of code relating to the positronium atom
 (i.e., an electron bound to its antiparticle, the positron).
 
 The package currently only contains two very simple modules.
