@@ -1,3 +1,5 @@
+#! python
+from __future__ import print_function, division
 '''
 The Bohr model of positronium
 '''
@@ -54,7 +56,10 @@ def En(n1=1, n2=float('inf'), **kwargs):
             result = rescale[unit](En)
         except ZeroDivisionError:
             result = float('inf')
-        return result
+        except:
+            raise
+        finally:
+            return result
     
 def radius(n=1, **kwargs):
     '''
