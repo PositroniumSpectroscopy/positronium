@@ -40,15 +40,15 @@ The mean lifetime of ortho-Ps is 142.0 ns.
 The ground-state hyperfine splitting is 203.4 GHz.
 ```
 
-*bohr* uses an adaption of the Rydberg formula (sim. to hydrogen) to calculate the principle
+*Bohr* uses an adaption of the Rydberg formula (sim. to hydrogen) to calculate the principle
 energy levels of positronium, or the interval between two levels.  The default unit is 'eV',
 however, this can be changed using the keyword argument 'unit'.
 
 For instance, the UV wavelength (in nm) needed to excite the Lyman-alpha transition can be found by:
 
 ```python
->>> from positronium import bohr
->>> bohr.En(1, 2, unit='nm')
+>>> from positronium import Bohr
+>>> Bohr.En(1, 2, unit='nm')
 243.00454681357735
 ```
 
