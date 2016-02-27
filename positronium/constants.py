@@ -7,8 +7,11 @@ from scipy.constants import m_e, e, epsilon_0, mu_0, c, h, hbar, alpha, Rydberg
 
 # mass
 m_Ps = 2.0 * m_e           # neglects binding energy
+# reduced mass
+reduced_mass_Ps = m_e/ 2.0
 # Rydberg
 Ryd_Ps = Rydberg / 2.0
+Rydberg_Ps = Rydberg / 2.0
 # Bohr radius
 a_0 = hbar / (m_e * c * alpha)
 # Ps Bohr raidus

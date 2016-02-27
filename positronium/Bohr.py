@@ -28,6 +28,7 @@ def En(n1=1, n2=float('inf'), **kwargs):
                'meV': (lambda x: x*constants.h*constants.c/ (constants.e * 1e-3)),
                'ueV': (lambda x: x*constants.h*constants.c/ (constants.e * 1e-6)),
                'au': (lambda x: x / (2 * constants.Rydberg)),
+               'Hartree': (lambda x: x / (2 * constants.Rydberg)),
                'Hz': (lambda x: x*constants.c),
                'kHz': (lambda x: x*constants.c / 1e3),
                'MHz': (lambda x: x*constants.c / 1e6),

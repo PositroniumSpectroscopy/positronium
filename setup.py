@@ -5,7 +5,7 @@ def readme():
         return f.read()
 
 setup(name='positronium',
-      version='0.1.3',
+      version='0.1.4',
       description='python tools pertaining to positronium',
       url='https://github.com/PositroniumSpectroscopy/positronium',
       author='Adam Deller',
