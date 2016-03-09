@@ -22,6 +22,18 @@ via pip (recommended):
 pip install positronium
 ```
 
+alternatively, try the development version
+
+```
+git clone https://github.com/PositroniumSpectroscopy/positronium
+```
+
+and then run
+
+```
+python setup.py install
+```
+
 ## About
 
 This package is designed to collate useful bits of code relating to the positronium atom
