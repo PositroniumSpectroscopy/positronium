@@ -4,6 +4,7 @@ from __future__ import print_function, division
 The Bohr model of positronium
 '''
 import positronium.constants as constants
+import numpy as np
 
 def En(n1=1, n2=float('inf'), **kwargs):
     '''
@@ -52,16 +53,10 @@ def En(n1=1, n2=float('inf'), **kwargs):
         raise KeyError('"' + unit + '" is not recognised as a suitable unit. See' +
                                ' docstring for unit list.')
     else:
-        En = (constants.Ryd_Ps) * (1.0/(n1**2) - 1.0/(n2**2))
-        try:
-            result = rescale[unit](En)
-        except ZeroDivisionError:
-            result = float('inf')
-        except:
-            raise
-        finally:
-            return result
-    
+        En = (constants.Ryd_Ps) * (np.subtract(np.reciprocal(np.power(n1, 2.0)),
+                                   np.reciprocal(np.power(n2, 2.0))))
+        return rescale[unit](En)
+
 def radius(n=1, **kwargs):
     '''
     Return n^2 * a_Ps, where a_Ps is the Bohr radius for positronium (2 * a_0). 
@@ -91,4 +86,4 @@ def radius(n=1, **kwargs):
         raise KeyError('"' + unit + '" is not recognised as a suitable unit. See' +
                                ' docstring for unit list.')
     else:
-        return rescale[unit](n**2 * constants.a_Ps)
+        return rescale[unit](np.power(n, 2) * constants.a_Ps)
