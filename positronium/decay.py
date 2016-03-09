@@ -7,7 +7,7 @@ Created on Sat Feb 27 11:35:54 2016
 """
 import numpy as np
 import positronium.constants as constants
-t_0 = 3*constants.hbar / (2.0 * constants.alpha**5 * constants.reduced_mass_Ps * constants.c**2)
+t_0 = 3.0*constants.hbar / (2.0 * constants.alpha**5.0 * constants.reduced_mass_Ps * constants.c**2.0)
 
 def radiative(n, l=0, unit='s'):
     '''
@@ -46,23 +46,5 @@ def radiative(n, l=0, unit='s'):
     if unit not in rescale:
         raise KeyError('"' + unit + '" is not recognised as a suitable unit. See' +
                            ' docstring for unit list.')
-    # make it possible to check values from arrays
-    n = np.array([n]).flatten()
-    l = np.array([l]).flatten()
-    if not (l >= 0).any():
-        raise ValueError("'l' must be greater than or equal to zero")
-    if not np.greater(n, l).all():
-        raise ValueError("'n' must be greater than 'l'")
-    else:
-        lifetime = t_0*np.power(n,3)*np.multiply(l, np.add(l, 1))
-        try:
-            result = rescale[unit](lifetime)
-        except ZeroDivisionError:
-            result = float('inf')
-        except:
-            raise
-        finally:
-            if len(result) == 1:
-                return result[0]
-            else:
-                return result
+    lifetime = t_0 * np.multiply(np.power(n, 3.0), np.multiply(l, np.add(l, 1)))
+    return rescale[unit](lifetime)
