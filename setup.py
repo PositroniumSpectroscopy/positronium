@@ -10,7 +10,7 @@ setup(name='positronium',
       url='https://github.com/PositroniumSpectroscopy/positronium',
       author='Adam Deller',
       author_email='adam.deller1@gmail.com',
-      license='MIT',
+      license='BSD',
       packages=['positronium'],
       install_requires=[
           'scipy>0.14',
