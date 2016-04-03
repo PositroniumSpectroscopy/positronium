@@ -34,6 +34,10 @@ and then run
 python setup.py install
 ```
 
+### Disclaimer
+This package is very much under development: module / functions/ variables names, functionality,
+etc. are all subject to change. 
+
 ## About
 
 This package is designed to collate useful bits of code relating to the positronium atom
@@ -60,7 +64,7 @@ For instance, the UV wavelength (in nm) needed to excite the Lyman-alpha transit
 
 ```python
 >>> from positronium import Bohr
->>> Bohr.En(1, 2, unit='nm')
+>>> Bohr.energy(1, 2, unit='nm')
 243.00454681357735
 ```
 
