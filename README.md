@@ -39,7 +39,7 @@ python setup.py install
 
 This package is designed to collate useful bits of code relating to the positronium atom
 (an electron bound to its antiparticle, the positron).  The functions are generally simple
-approximations that give roughly the right answers, rather than rigerous quantum mechanical
+approximations that give roughly the right answers, rather than rigorous quantum mechanical
 calculations.
 
 The package currently only contains a few very simple modules.
@@ -48,7 +48,7 @@ The package currently only contains a few very simple modules.
 
     |const      | description                   |
     |-----------|-------------------------------|
-    |m_Ps       | Ps mass                       | 
+    |m_Ps       | 2 * mass_electron             | 
     |Rydberg_Ps | Rydberg value for Ps          |
     |a_Ps       | Bohr radius for Ps            |
     |decay_pPs  | decay rate of para-Ps         |
@@ -56,9 +56,13 @@ The package currently only contains a few very simple modules.
     |tau_pPs    | lifetime of n=1 para-Ps       |
     |tau_oPs    | lifetime of n=1 ortho-Ps      |
     |nu_hfs     | frequency of the ground-state |
-    |           | hyperfine interval            |
-    |energy_hfs | energy of the ground-state    |
-    |           | hyperfine interval            |
+    |           | hyperfine splitting           |
+    |energy_hfs | energy interval of the ground-|
+    |           | state hyperfine splitting     |
+    |nu_1s2s    | frequency of the 1s2s         | 
+    |           | transition                    |
+    |energy_1s2s| energy interval of the 1s2s   |
+    |           | transition                    | 
 
 Example usage,
 
@@ -71,21 +75,26 @@ The mean lifetime of ortho-Ps is 142.0 ns.
 The ground-state hyperfine splitting is 203.4 GHz.
 ```
 
-Where appropriote constants are stored in a subclass of float called MeasuredValue, which
+Where appropriate constants are stored in a subclass of float called MeasuredValue, which
 has a few extra attributes [uncertainty, unit, source, url], for example
 
 ```python
+>>> tau_oPs
+1.4203738423953184e-07
+
 >>> tau_oPs.uncertainty
 3.631431333889514e-11
 
 >>> print(tau_oPs.source)
 R. S. Vallery, P. W. Zitzewitz, and D. W. Gidley (2003) Phys. Rev. Lett. 90, 203402
+
+>>> tau_oPs.article()
 ```
 
-The method [MeasuredValue].article() opens a url to the source journal.
+The final line opens a url to the source journal. 
 
-*Bohr* uses an adaption of the Rydberg formula (sim. to hydrogen) to calculate the principle
-energy levels of positronium, or the interval between two levels.  The default unit is 'eV',
+*Bohr* adapts the Rydberg formula for positronium to calculate the principle
+energy levels, or the interval between two levels.  The default unit is 'eV',
 however, this can be changed using the keyword argument 'unit'.
 
 For instance, the UV wavelength (in nm) needed to excite the Lyman-alpha transition can be found by:
@@ -113,6 +122,6 @@ array([[ 1.        ,  6.8028465 ],
        [ 9.        ,  0.08398576]])
 ```
 
-For further examples see the IPython/ Jupter notebooks,
+For further examples see the IPython/ Jupyter notebooks,
 
 https://github.com/PositroniumSpectroscopy/positronium/tree/master/examples

@@ -3,8 +3,8 @@
 The Bohr model of positronium
 '''
 from __future__ import print_function, division
-from . import constants
 import numpy as np
+from . import constants
 
 def energy(n1=1, n2=float('inf'), **kwargs):
     '''

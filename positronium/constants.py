@@ -48,7 +48,7 @@ for con in [decay_pPs, tau_pPs]:
 decay_oPs = MeasuredValue(7.0404e6, 0.0018e6, 'Hz')
 tau_oPs = MeasuredValue(1.0 / decay_oPs, decay_oPs.uncertainty/ decay_oPs**2.0, 's')
 for con in [decay_oPs, tau_oPs]:
-    setattr(con, 'source', 'R. S. Vallery, P. W. Zitzewitz, and D. W. Gidley (2003)' + \
+    setattr(con, 'source', 'R. S. Vallery, P. W. Zitzewitz, and D. W. Gidley (2003) ' + \
                            'Phys. Rev. Lett. 90, 203402')
     setattr(con, 'url', 'http://dx.doi.org/10.1103/PhysRevLett.90.203402')
 
