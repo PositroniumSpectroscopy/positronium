@@ -3,32 +3,76 @@
 Physical constants
 '''
 from __future__ import print_function, division
+import webbrowser
 from scipy.constants import m_e, e, c, h, hbar, alpha, Rydberg
 
-# mass
-m_Ps = 2.0 * m_e           # neglects binding energy
-# reduced mass
+class MeasuredValue(float):
+    ''' subclass of built-in type float'''
+    def __new__(cls, value, uncertainty, unit):
+        measured = float.__new__(cls, value)
+        measured.value = value
+        measured.uncertainty = uncertainty
+        measured.unit = unit
+        measured.source = None
+        measured.url = None
+        return measured
+
+    def article(self):
+        ''' open url to constant reference'''
+        webbrowser.open(self.url)
+
+# Planck constant uncertainty CODATA [J/s]
+h_uncertainty = 8.1e-42
+# mass [kg]
+m_Ps = 2.0 * m_e
+# reduced mass [kg]
 reduced_mass_Ps = m_e/ 2.0
 # Rydberg
 Ryd_Ps = Rydberg / 2.0
 Rydberg_Ps = Rydberg / 2.0
-# Bohr radius
+# Bohr radius [m]
 a_0 = hbar / (m_e * c * alpha)
-# Ps Bohr raidus
+# Ps Bohr raidus [m]
 a_Ps = 2.0 * a_0
-# ground-state decay rate
-decay_pPs = 7.9896178e9    # Phys. Rev. A 68 (2003) 032512
-decay_oPs = 7.039968e6     # Phys. Rev. Lett. 85 (2000) 3065
-# ground-state lifetime
-tau_pPs = 1.0 / decay_pPs
-tau_oPs = 1.0 / decay_oPs
+
+# ground-state decay rate / lifetime
+## para-positronium
+decay_pPs = MeasuredValue(7990.9e6, 1.7e6, 'Hz')
+tau_pPs = MeasuredValue(1.0 / decay_pPs, decay_pPs.uncertainty/ decay_pPs**2.0, 's')
+for con in [decay_pPs, tau_pPs]:
+    setattr(con, 'source', 'Al-Ramadhan, A. H. and Gidley, D. W. (1994) ' + \
+                           'Phys. Rev. Lett. 72, 1632 ')
+    setattr(con, 'url', 'http://dx.doi.org/10.1103/PhysRevLett.72.1632')
+
+## ortho-positronium
+decay_oPs = MeasuredValue(7.0404e6, 0.0018e6, 'Hz')
+tau_oPs = MeasuredValue(1.0 / decay_oPs, decay_oPs.uncertainty/ decay_oPs**2.0, 's')
+for con in [decay_oPs, tau_oPs]:
+    setattr(con, 'source', 'R. S. Vallery, P. W. Zitzewitz, and D. W. Gidley (2003)' + \
+                           'Phys. Rev. Lett. 90, 203402')
+    setattr(con, 'url', 'http://dx.doi.org/10.1103/PhysRevLett.90.203402')
+
 # ground-state hyperfine splitting
-nu_hfs = 2.033942e11       # Phys. Lett. B 734 (2014) 338
-en_hfs = h * nu_hfs
+nu_hfs = MeasuredValue(2.033942e11, 1.6e6, 'Hz')
+energy_hfs = MeasuredValue(h * nu_hfs,
+                           ((h * nu_hfs.uncertainty)**2.0 + (h_uncertainty * nu_hfs)**2.0)**0.5,
+                           'J')
+for con in [nu_hfs, energy_hfs]:
+    setattr(con, 'source', 'Ishida, A. et al. (2014) Phys. Lett. B 734, 338')
+    setattr(con, 'url', 'http://dx.doi.org/10.1016/j.physletb.2014.05.083')
+
+# 1S-2S interval
+nu_1s2s = MeasuredValue(1233607216.4e6, 3.2e6, 'Hz')
+energy_1s2s = MeasuredValue(h * nu_1s2s,
+                            ((h * nu_1s2s.uncertainty)**2.0 + (h_uncertainty * nu_1s2s)**2.0)**0.5,
+                            'J')
+for con in [nu_1s2s, energy_1s2s]:
+    setattr(con, 'source', 'Fee, M.S. et al. (1993) Phys. Rev. Lett. 70, 1397')
+    setattr(con, 'url', 'http://dx.doi.org/10.1103/PhysRevLett.70.1397')
 
 ## rescale atomic units
-# energy
-atomic_en = dict({'J': (lambda x: x * 2.0 * Rydberg * h * c),
+# energy / energy interval / wavelength/ wavenumbers
+au_energy = dict({'J': (lambda x: x * 2.0 * Rydberg * h * c),
                   'eV': (lambda x: x * 2.0 * Rydberg * h * c / e),
                   'meV': (lambda x: 1e3 * x * 2.0 * Rydberg * h * c / e),
                   'ueV': (lambda x: 1e6 * x * 2.0 * Rydberg * h * c / e),
@@ -48,11 +92,11 @@ atomic_en = dict({'J': (lambda x: x * 2.0 * Rydberg * h * c),
                   'm^-1': (lambda x: x * 2.0 * Rydberg),
                   'cm^-1': (lambda x: 1e-2 * x * 2.0 * Rydberg)})
 # distance
-atomic_d = dict({'m': (lambda x: x * a_0),
-                 'cm': (lambda x: x * a_0 * 1e2),
-                 'mm': (lambda x: x * a_0 * 1e3),
-                 'um': (lambda x: x * a_0 * 1e6),
-                 'nm': (lambda x: x * a_0 * 1e9),
-                 'A': (lambda x: x * a_0 * 1e10),
-                 'pm': (lambda x: x * a_0 * 1e12),
-                 'fm': (lambda x: x * a_0 * 1e15)})
+au_distance = dict({'m': (lambda x: x * a_0),
+                    'cm': (lambda x: x * a_0 * 1e2),
+                    'mm': (lambda x: x * a_0 * 1e3),
+                    'um': (lambda x: x * a_0 * 1e6),
+                    'nm': (lambda x: x * a_0 * 1e9),
+                    'A': (lambda x: x * a_0 * 1e10),
+                    'pm': (lambda x: x * a_0 * 1e12),
+                    'fm': (lambda x: x * a_0 * 1e15)})

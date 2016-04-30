@@ -9,7 +9,7 @@ import numpy as np
 def energy(n1=1, n2=float('inf'), **kwargs):
     '''
     Calculate the interval between energy levels n1 and n2
-    according to the Bohr model, i.e. the Rydberg formula.
+    according to the Bohr model, i.e., the Rydberg formula.
 
     kwargs:
         unit:
@@ -25,12 +25,12 @@ def energy(n1=1, n2=float('inf'), **kwargs):
 
     '''
     unit = kwargs.get('unit', 'eV')
-    interval = 0.25 * (np.subtract(np.reciprocal(np.power(n1, 2.0)),
-                                   np.reciprocal(np.power(n2, 2.0))))
+    interval = 0.25 * (np.subtract(np.power(n1, -2.0),
+                                   np.power(n2, -2.0)))
     if (unit == 'au') or (unit == 'Hartree'):
         return interval
-    elif unit in constants.atomic_en:
-        return constants.atomic_en[unit](interval)
+    elif unit in constants.au_energy:
+        return constants.au_energy[unit](interval)
     else:
         raise KeyError(unit + ' is not recognised as a suitable unit. See' + \
                                ' docstring for unit list.')
@@ -53,8 +53,8 @@ def radius(n=1, **kwargs):
     rad = (2.0 * np.power(n, 2.0))
     if (unit == 'au') or (unit == 'Bohr'):
         return rad
-    elif unit in constants.atomic_d:
-        return constants.atomic_d[unit](rad)
+    elif unit in constants.au_distance:
+        return constants.au_distance[unit](rad)
     else:
         raise KeyError(unit + ' is not recognised as a suitable unit. See' + \
                                ' docstring for unit list.')

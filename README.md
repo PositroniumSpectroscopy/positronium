@@ -34,18 +34,33 @@ and then run
 python setup.py install
 ```
 
-### Disclaimer
-This package is very much under development: module / functions/ variables names, functionality,
-etc. are all subject to change. 
 
 ## About
 
 This package is designed to collate useful bits of code relating to the positronium atom
-(an electron bound to its antiparticle, the positron).
+(an electron bound to its antiparticle, the positron).  The functions are generally simple
+approximations that give roughly the right answers, rather than rigerous quantum mechanical
+calculations.
 
-The package currently only contains two very simple modules.
+The package currently only contains a few very simple modules.
 
-*constants* is intended to collect useful constants.  For example,
+*constants* is intended to collect useful constants in SI units, including:
+
+    |const      | description                   |
+    |-----------|-------------------------------|
+    |m_Ps       | Ps mass                       | 
+    |Rydberg_Ps | Rydberg value for Ps          |
+    |a_Ps       | Bohr radius for Ps            |
+    |decay_pPs  | decay rate of para-Ps         |
+    |decay_oPs  | decay rate of ortho-Ps        |
+    |tau_pPs    | lifetime of n=1 para-Ps       |
+    |tau_oPs    | lifetime of n=1 ortho-Ps      |
+    |nu_hfs     | frequency of the ground-state |
+    |           | hyperfine interval            |
+    |energy_hfs | energy of the ground-state    |
+    |           | hyperfine interval            |
+
+Example usage,
 
 ```python
 >>> from positronium.constants import tau_oPs, nu_hfs
@@ -55,6 +70,19 @@ The mean lifetime of ortho-Ps is 142.0 ns.
 >>> print("The ground-state hyperfine splitting is", "%.1f GHz."%(nu_hfs * 1e-9))
 The ground-state hyperfine splitting is 203.4 GHz.
 ```
+
+Where appropriote constants are stored in a subclass of float called MeasuredValue, which
+has a few extra attributes [uncertainty, unit, source, url], for example
+
+```python
+>>> tau_oPs.uncertainty
+3.631431333889514e-11
+
+>>> print(tau_oPs.source)
+R. S. Vallery, P. W. Zitzewitz, and D. W. Gidley (2003) Phys. Rev. Lett. 90, 203402
+```
+
+The method [MeasuredValue].article() opens a url to the source journal.
 
 *Bohr* uses an adaption of the Rydberg formula (sim. to hydrogen) to calculate the principle
 energy levels of positronium, or the interval between two levels.  The default unit is 'eV',
@@ -66,6 +94,23 @@ For instance, the UV wavelength (in nm) needed to excite the Lyman-alpha transit
 >>> from positronium import Bohr
 >>> Bohr.energy(1, 2, unit='nm')
 243.00454681357735
+```
+
+This accepts numpy arrays for n1 and/ or n2, e.g.,
+
+```python
+>>> import numpy as np
+>>> n1 = np.arange(1, 10)
+>>> np.array([n1, Bohr.energy(n1, unit='eV')]).T
+array([[ 1.        ,  6.8028465 ],
+       [ 2.        ,  1.70071163],
+       [ 3.        ,  0.75587183],
+       [ 4.        ,  0.42517791],
+       [ 5.        ,  0.27211386],
+       [ 6.        ,  0.18896796],
+       [ 7.        ,  0.1388336 ],
+       [ 8.        ,  0.10629448],
+       [ 9.        ,  0.08398576]])
 ```
 
 For further examples see the IPython/ Jupter notebooks,
