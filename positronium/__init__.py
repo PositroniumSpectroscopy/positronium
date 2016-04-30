@@ -2,4 +2,4 @@
 from __future__ import print_function, division  # Require Python 2.6 or later
 from . import constants
 from . import Bohr
-from .Ps import Ps
+#from .Ps import Ps
