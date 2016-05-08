@@ -33,7 +33,7 @@ def energy(n1=1, n2=float('inf'), **kwargs):
         return constants.au_energy[unit](interval)
     else:
         raise KeyError(unit + ' is not recognised as a suitable unit. See' + \
-                               ' docstring for unit list.')
+                              ' docstring for unit list.')
 
 def radius(n=1, **kwargs):
     '''
@@ -57,4 +57,4 @@ def radius(n=1, **kwargs):
         return constants.au_distance[unit](rad)
     else:
         raise KeyError(unit + ' is not recognised as a suitable unit. See' + \
-                               ' docstring for unit list.')
+                              ' docstring for unit list.')

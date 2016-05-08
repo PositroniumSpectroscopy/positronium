@@ -19,9 +19,12 @@ class MeasuredValue(float):
 
     def article(self):
         ''' open url to constant reference'''
-        webbrowser.open(self.url)
+        if self.url is not None:
+            webbrowser.open(self.url)
+        else:
+            raise LookupError('The source url has not been specified.')
 
-# Planck constant uncertainty CODATA [J/s]
+# Planck constant uncertainty CODATA [J s]
 h_uncertainty = 8.1e-42
 # mass [kg]
 m_Ps = 2.0 * m_e
@@ -53,15 +56,16 @@ for con in [decay_oPs, tau_oPs]:
     setattr(con, 'url', 'http://dx.doi.org/10.1103/PhysRevLett.90.203402')
 
 # ground-state hyperfine splitting
-nu_hfs = MeasuredValue(2.033942e11, 1.6e6, 'Hz')
+nu_hfs = MeasuredValue(203.38910e9, 000.00074e9, 'Hz')
 energy_hfs = MeasuredValue(h * nu_hfs,
                            ((h * nu_hfs.uncertainty)**2.0 + (h_uncertainty * nu_hfs)**2.0)**0.5,
                            'J')
 for con in [nu_hfs, energy_hfs]:
-    setattr(con, 'source', 'Ishida, A. et al. (2014) Phys. Lett. B 734, 338')
-    setattr(con, 'url', 'http://dx.doi.org/10.1016/j.physletb.2014.05.083')
+    setattr(con, 'source', 'M. W. Ritter, P. O. Egan, V. W. Hughes, and ' +
+                           'K. A. Woodle (1984) Phys. Rev. A 30, 1331')
+    setattr(con, 'url', 'http://dx.doi.org/10.1103/PhysRevA.30.1331')
 
-# 1S-2S interval
+# 1^3S-2^3S interval
 nu_1s2s = MeasuredValue(1233607216.4e6, 3.2e6, 'Hz')
 energy_1s2s = MeasuredValue(h * nu_1s2s,
                             ((h * nu_1s2s.uncertainty)**2.0 + (h_uncertainty * nu_1s2s)**2.0)**0.5,
@@ -70,8 +74,8 @@ for con in [nu_1s2s, energy_1s2s]:
     setattr(con, 'source', 'Fee, M.S. et al. (1993) Phys. Rev. Lett. 70, 1397')
     setattr(con, 'url', 'http://dx.doi.org/10.1103/PhysRevLett.70.1397')
 
-## rescale atomic units
-# energy / energy interval / wavelength/ wavenumbers
+# rescale atomic units
+## energy / energy interval / wavelength/ wavenumbers
 au_energy = dict({'J': (lambda x: x * 2.0 * Rydberg * h * c),
                   'eV': (lambda x: x * 2.0 * Rydberg * h * c / e),
                   'meV': (lambda x: 1e3 * x * 2.0 * Rydberg * h * c / e),
@@ -91,7 +95,7 @@ au_energy = dict({'J': (lambda x: x * 2.0 * Rydberg * h * c),
                   'fm': (lambda x: 1e15 / (x * 2.0 * Rydberg)),
                   'm^-1': (lambda x: x * 2.0 * Rydberg),
                   'cm^-1': (lambda x: 1e-2 * x * 2.0 * Rydberg)})
-# distance
+## distance
 au_distance = dict({'m': (lambda x: x * a_0),
                     'cm': (lambda x: x * a_0 * 1e2),
                     'mm': (lambda x: x * a_0 * 1e3),
