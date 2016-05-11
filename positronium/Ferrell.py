@@ -6,6 +6,7 @@ http://dx.doi.org/10.1103/PhysRev.84.858
 
 Nb. This does not include the Lamb shift/ radiative corrections.
 '''
+from __future__ import print_function, division
 import numpy as np
 from positronium.constants import alpha, au_energy
 
