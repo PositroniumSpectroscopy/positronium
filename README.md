@@ -136,12 +136,13 @@ which can be used to estimate the energy levels of positronium, including fine s
 is used to define a class called Ps, which can be used to represent a particular quantum state
 of positronium using the quantum numbers 
 
-|--|--------------------------|
-|n | principle                | 
-|l | orbital angular momentum |
-|m | magnetic quantum number  |
-|S | total spin               |
-|J | total angular momentum   |
+|     |                          |
+|-----|--------------------------|
+| n   | principle                | 
+| l   | orbital angular momentum |
+| m   | magnetic quantum number  |
+| S   | total spin               |
+| J   | total angular momentum   |
 
 Class methods can be used to return estimates of, e.g., the energy level, for example
 
