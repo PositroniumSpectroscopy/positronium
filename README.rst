@@ -11,11 +11,10 @@ Examples written using IPython 4.0.1 (python 3.5.1 kernel).
 
 Package dependencies:
 
--  scipy
+-  scipy, numpy
 
 IPython examples dependencies:
 
--  numpy
 -  matplotlib
 
 Installation
