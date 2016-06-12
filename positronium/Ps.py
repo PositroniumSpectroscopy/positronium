@@ -188,14 +188,14 @@ class Ps(object):
     # self annihlation
     # ----------------
 
-    def annihilation_rate(self, unit='Hz'):
+    def annihilation(self, unit='Hz'):
         """  Calculate the annihilation rate/ lifetime for S states (l=0).
 
             quantum numbers:
                 n, l=0
         """
         if self.l != 0:
-            raise ValueError('This only works for l=0 states.')
+            raise ValueError('This calculation only works for l=0 states.')
         else:
             rescale = {'s': (lambda x: x),
                        'ms': (lambda x: x*1e3),
@@ -213,9 +213,9 @@ class Ps(object):
                 raise KeyError('"' + unit + '" is not recognised as a suitable unit.')
             else:
                 if self.S == 0:
-                    return constants.tau_pPs * self.n**3.0
+                    return constants.lifetime_pPs * self.n**3.0
                 elif self.S == 1:
-                    return constants.tau_oPs * self.n**3.0
+                    return constants.lifetime_oPs * self.n**3.0
                 else:
                     raise ValueError("The total spin quantum number 'S' must be 0 or 1.")
 

@@ -48,28 +48,28 @@ The package currently only contains a few very simple modules.
 
 is intended to collect useful constants in SI units, including:
 
-|const      | description                                              |
-|-----------|----------------------------------------------------------|
-|m_Ps       | 2 * mass_electron                                        | 
-|Rydberg_Ps | Rydberg value for Ps                                     |
-|a_Ps       | Bohr radius for Ps                                       |
-|decay_pPs  | decay rate of para-Ps                                    |
-|decay_oPs  | decay rate of ortho-Ps                                   |
-|tau_pPs    | lifetime of n=1 para-Ps                                  |
-|tau_oPs    | lifetime of n=1 ortho-Ps                                 |
-|nu_hfs     | frequency of the ground-state hyperfine splitting        |
-|energy_hfs | energy interval of the ground-state hyperfine splitting  |
-|nu_1s2s    | frequency of the 1s2s transition                         |
-|energy_1s2s| energy interval of the 1s2s transition                   | 
+|const          | description                                              |
+|---------------|----------------------------------------------------------|
+|m_Ps           | 2 * mass_electron                                        | 
+|Rydberg_Ps     | Rydberg value for Ps                                     |
+|a_Ps           | Bohr radius for Ps                                       |
+|decay_pPs      | decay rate of para-Ps (S=0)                              |
+|decay_oPs      | decay rate of ortho-Ps (S=1)                             |
+|lifetime_pPs   | lifetime of para-Ps (S=0)                                |
+|lifetime_oPs   | lifetime of ortho-Ps (S=1)                               |
+|frequency_hfs  | frequency of the ground-state hyperfine splitting        |
+|energy_hfs     | energy interval of the ground-state hyperfine splitting  |
+|frequency_1s2s | frequency of the 1s2s transition                         |
+|energy_1s2s    | energy interval of the 1s2s transition                   | 
 
 Example usage,
 
 ```python
->>> from positronium.constants import tau_oPs, nu_hfs
->>> print("The mean lifetime of ortho-Ps is", "%.1f ns."%(tau_oPs * 1e9))
+>>> from positronium.constants import lifetime_oPs, frequency_hfs
+>>> print("The mean lifetime of ortho-Ps is", "%.1f ns."%(lifetime_oPs * 1e9))
 The mean lifetime of ortho-Ps is 142.0 ns.
 
->>> print("The ground-state hyperfine splitting is", "%.1f GHz."%(nu_hfs * 1e-9))
+>>> print("The ground-state hyperfine splitting is", "%.1f GHz."%(frequency_hfs * 1e-9))
 The ground-state hyperfine splitting is 203.4 GHz.
 ```
 
@@ -77,16 +77,16 @@ Where appropriate constants are stored in a subclass of float called MeasuredVal
 has a few extra attributes [uncertainty, unit, source, url], for example
 
 ```python
->>> tau_oPs
+>>> lifetime_oPs
 1.4203738423953184e-07
 
->>> tau_oPs.uncertainty
+>>> lifetime_oPs.uncertainty
 3.631431333889514e-11
 
->>> print(tau_oPs.source)
+>>> print(lifetime_oPs.source)
 R. S. Vallery, P. W. Zitzewitz, and D. W. Gidley (2003) Phys. Rev. Lett. 90, 203402
 
->>> tau_oPs.article()
+>>> lifetime_oPs.article()
 ```
 
 The final line opens a url to the source journal. 
@@ -122,18 +122,9 @@ array([[ 1.        ,  6.8028465 ],
        [ 9.        ,  0.08398576]])
 ```
 
-### Ferrell
-
-contains an equation described in 
-
-> Richard A. Ferrell (1951) Phys. Rev. 84, 858
-> http://dx.doi.org/10.1103/PhysRev.84.858
-
-which can be used to estimate the energy levels of positronium, including fine structure, but not including radiative corrections. 
-
 ### Ps
 
-is used to define a class called Ps, which can be used to represent a particular quantum state
+is used to define a class called Ps, which can be used to represent a particular atomic state
 of positronium using the quantum numbers 
 
 |     |                          |
@@ -144,7 +135,7 @@ of positronium using the quantum numbers
 | S   | total spin               |
 | J   | total angular momentum   |
 
-Class methods can be used to return estimates of, e.g., the energy level, for example
+Class methods can be used to return estimates of, e.g., the energy level,
 
 ```python
 >>> from positronium import Ps
@@ -153,7 +144,14 @@ Class methods can be used to return estimates of, e.g., the energy level, for ex
 -1.7007156827724967
 ```
 
-or to give a representation of the state using Latex code,
+This uses an equation described in 
+
+> Richard A. Ferrell (1951) Phys. Rev. 84, 858
+> http://dx.doi.org/10.1103/PhysRev.84.858
+
+which includes fine structure but not radiative corrections.
+
+A representation of the state using Latex code can be made using,
 
 ```python
 >>> x1.tex()
