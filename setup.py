@@ -4,6 +4,25 @@ def readme():
     with open('README.md') as f:
         return f.read()
 
+CLASSIFIERS = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.6",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.3",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Scientific/Engineering :: Physics", 
+]
+
 setup(name='positronium',
       version='0.1.7',
       description='python tools pertaining to positronium',
@@ -13,7 +32,7 @@ setup(name='positronium',
       license='BSD',
       packages=['positronium'],
       install_requires=[
-          'scipy>0.14',
+          'scipy>0.14', 'numpy>1.10',
       ],
       include_package_data=True,
       zip_safe=False)
