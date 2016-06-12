@@ -28,6 +28,7 @@ class MeasuredValue(float):
 h_uncertainty = 8.1e-42
 # mass [kg]
 m_Ps = 2.0 * m_e
+mass_Ps = 2.0 * m_e
 # reduced mass [kg]
 reduced_mass_Ps = m_e/ 2.0
 # Rydberg

@@ -148,7 +148,7 @@ level, e.g.,
 Ps
 ~~
 
-is used to define a class called Ps, which can be used to represent a
+This package contains a class called Ps, which can be used to represent a
 particular atomic state of positronium using the quantum numbers
 
 +-----+----------------------------+
@@ -163,7 +163,7 @@ particular atomic state of positronium using the quantum numbers
 | J   | total angular momentum     |
 +-----+----------------------------+
 
-Class methods can be used to return estimates of, e.g., the energy
+This can be used to return estimates of, e.g., the energy
 level,
 
 .. code:: python
@@ -173,12 +173,12 @@ level,
     >>> x1.energy(unit='eV')
     -1.7007156827724967
 
-This uses an equation described in
+which uses an equation described in
 
     Richard A. Ferrell (1951) Phys. Rev. 84, 858
     http://dx.doi.org/10.1103/PhysRev.84.858
 
-which includes fine structure but not radiative corrections.
+This includes fine structure but not radiative corrections.
 
 A representation of the state using Latex code can be made using,
 
