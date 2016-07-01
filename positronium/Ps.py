@@ -4,7 +4,6 @@ Atomic state of positronium
 '''
 from __future__ import print_function, division
 from math import factorial
-import string
 from scipy.special import sph_harm, hyp1f1
 import numpy as np
 from . import constants, Ferrell
@@ -236,5 +235,5 @@ class Ps(object):
             >>> x = Ps(n=1, l=0, S=1, J=1)
             >>> Latex(x.tex())
         """
-        L = ('SPD' + string.ascii_uppercase[5:].replace("J", ""))[self.l]
+        L = 'SPDFGHIKLMNOQRTUVWXYZ'[int(self.l%22)]
         return r'$%d^{%d}'%(self.n, 2*self.S + 1) + L + r'_{%d}$'%(self.J)
