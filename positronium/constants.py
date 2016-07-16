@@ -31,6 +31,7 @@ m_Ps = 2.0 * m_e
 mass_Ps = 2.0 * m_e
 # reduced mass [kg]
 reduced_mass_Ps = m_e/ 2.0
+mu_Ps = m_e/ 2.0
 # Rydberg
 Ryd_Ps = Rydberg / 2.0
 Rydberg_Ps = Rydberg / 2.0

@@ -80,10 +80,9 @@ class Ps(object):
     def wavefunction_nlm(self, r, theta, phi):
         """ wavefunction_nlm(r, theta, phi) = R_nl (r) * Y_lm (theta, phi)
 
-            Solution to the Schrodinger equation for a charged particle in a
-            Coulomb potential centred at r=0.  Similar to the hydrogen
+            Solution to the Schrodinger equation.  Similar to the hydrogen
             wavefuntion but rescaled by a factor of 2 due to the reduced mass
-            of positronium.
+            of positronium, mu = m_e/ 2.0.
 
             Quantum Mechanics of one and two electron atoms,
             H. A. Bethe and E. E. Salpeter 1957
