@@ -199,7 +199,7 @@ class Ps(object):
     # -----------------
 
     def annihilation(self, unit='Hz'):
-        """  Calculate the annihilation rate/ lifetime for S states (l=0).
+        """ Calculate the annihilation rate/ lifetime for S states (l=0).
 
             quantum numbers:
                 n, l=0
