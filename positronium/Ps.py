@@ -43,6 +43,8 @@ class Ps(object):
         if self.l == 0 and self.J != self.S:
             raise ValueError("The total angular momentum quantum number 'J' " + \
                              "must be equal to S if l = 0.")
+        return "ok"
+
     # ------------------------
     # Schrodinger wavefunction
     # ------------------------
@@ -57,8 +59,9 @@ class Ps(object):
 
     def R_nl(self, r):
         """ The radial part of the wavefunction, R_nl(r).
-                Quantum Mechanics of one and two electron atoms,
-                H. A. Bethe and E. E. Salpeter 1957
+
+            Quantum Mechanics of one and two electron atoms,
+            H. A. Bethe and E. E. Salpeter 1957
 
                 r in units of the Bohr radius, a_0.
 
@@ -77,6 +80,14 @@ class Ps(object):
     def wavefunction_nlm(self, r, theta, phi):
         """ wavefunction_nlm(r, theta, phi) = R_nl (r) * Y_lm (theta, phi)
 
+            Solution to the Schrodinger equation for a charged particle in a
+            Coulomb potential centred at r=0.  Similar to the hydrogen
+            wavefuntion but rescaled by a factor of 2 due to the reduced mass
+            of positronium.
+
+            Quantum Mechanics of one and two electron atoms,
+            H. A. Bethe and E. E. Salpeter 1957
+
                 r in units of the Bohr radius, a_0.
 
             quantum numbers:
@@ -89,11 +100,11 @@ class Ps(object):
     # ------
 
     def energy(self, unit='J'):
-        """ energy levels of positronium according to calculations by
+        """ Energy levels of positronium.  Includes fine structure. Does not
+            include the Lamb shift/ radiative corrections.
+
             Richard A. Ferrell (1951) Phys. Rev. 84, 858
             http://dx.doi.org/10.1103/PhysRev.84.858
-
-            This does not include the Lamb shift/ radiative corrections.
 
             quantum numbers:
                 n, l, S, J
@@ -183,9 +194,9 @@ class Ps(object):
                                                np.multiply(self.l, np.add(self.l, 1)))
                 return rescale[unit](lifetime)
 
-    # ----------------
-    # self annihlation
-    # ----------------
+    # -----------------
+    # self annihilation
+    # -----------------
 
     def annihilation(self, unit='Hz'):
         """  Calculate the annihilation rate/ lifetime for S states (l=0).
