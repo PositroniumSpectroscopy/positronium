@@ -4,7 +4,26 @@ Physical constants
 '''
 from __future__ import print_function, division
 import webbrowser
-from scipy.constants import m_e, e, c, h, hbar, alpha, Rydberg
+
+#CODATA 2014, DOI: 10.1103/RevModPhys.88.035009
+c = 299792458.0 ## speed of light in vacuum
+h = 6.626070040e-34
+h_uncertainty = 8.1e-42
+hbar = 1.054571800e-34
+Ry = 10973731.568508
+e = 1.6021766208e-19
+m_e = 9.10938356e-31
+alpha = 7.2973525664e-3
+m_u = 1.660539040e-27
+En_h = alpha**2.0 * m_e * c**2.0
+a_0 = hbar/ (m_e * c * alpha)
+mu_B = e * hbar / (2.0 * m_e)
+
+# Ps
+mass_Ps = m_Ps  = 2.0 * m_e
+reduced_mass_Ps = mu_Ps = m_e/ 2.0
+Rydberg_Ps = Ry_Ps = Ry / 2.0
+a_Ps = 2.0 * a_0
 
 class MeasuredValue(float):
     ''' subclass of built-in type float'''
@@ -23,22 +42,6 @@ class MeasuredValue(float):
             webbrowser.open(self.url)
         else:
             raise LookupError('The source url has not been specified.')
-
-# Planck constant uncertainty CODATA [J s]
-h_uncertainty = 8.1e-42
-# mass [kg]
-m_Ps = 2.0 * m_e
-mass_Ps = 2.0 * m_e
-# reduced mass [kg]
-reduced_mass_Ps = m_e/ 2.0
-mu_Ps = m_e/ 2.0
-# Rydberg
-Ryd_Ps = Rydberg / 2.0
-Rydberg_Ps = Rydberg / 2.0
-# Bohr radius [m]
-a_0 = hbar / (m_e * c * alpha)
-# Ps Bohr raidus [m]
-a_Ps = 2.0 * a_0
 
 # ground-state decay rate / lifetime
 ## para-positronium
@@ -78,31 +81,31 @@ for con in [frequency_1s2s, energy_1s2s]:
 
 # rescale atomic units
 ## energy / energy interval / wavelength/ wavenumbers
-au_energy = dict({'J': (lambda x: x * 2.0 * Rydberg * h * c),
-                  'eV': (lambda x: x * 2.0 * Rydberg * h * c / e),
-                  'meV': (lambda x: 1e3 * x * 2.0 * Rydberg * h * c / e),
-                  'ueV': (lambda x: 1e6 * x * 2.0 * Rydberg * h * c / e),
-                  'Hz': (lambda x: x * 2.0 * Rydberg * c),
-                  'kHz': (lambda x: 1e-3 * x * 2.0 * Rydberg * c),
-                  'MHz': (lambda x: 1e-6 * x * 2.0 * Rydberg * c),
-                  'GHz': (lambda x: 1e-9 * x * 2.0 * Rydberg * c),
-                  'THz': (lambda x: 1e-12 * x * 2.0 * Rydberg * c),
-                  'm': (lambda x: 1.0 / (x * 2.0 * Rydberg)),
-                  'cm': (lambda x: 1e2 / (x * 2.0 * Rydberg)),
-                  'mm': (lambda x: 1e3 / (x * 2.0 * Rydberg)),
-                  'um': (lambda x: 1e6 / (x * 2.0 * Rydberg)),
-                  'nm': (lambda x: 1e9 / (x * 2.0 * Rydberg)),
-                  'A': (lambda x: 1e10 / (x * 2.0 * Rydberg)),
-                  'pm': (lambda x: 1e12 / (x * 2.0 * Rydberg)),
-                  'fm': (lambda x: 1e15 / (x * 2.0 * Rydberg)),
-                  'm^-1': (lambda x: x * 2.0 * Rydberg),
-                  'cm^-1': (lambda x: 1e-2 * x * 2.0 * Rydberg)})
+au_energy = dict([('J', lambda x: x * En_h),
+                  ('eV', lambda x: x * En_h / e),
+                  ('meV', lambda x: 1e3 * En_h / e),
+                  ('ueV', lambda x: 1e6 * En_h / e),
+                  ('Hz', lambda x: x * 2.0 * Ry * c),
+                  ('kHz', lambda x: 1e-3 * x * 2.0 * Ry * c),
+                  ('MHz', lambda x: 1e-6 * x * 2.0 * Ry * c),
+                  ('GHz', lambda x: 1e-9 * x * 2.0 * Ry * c),
+                  ('THz', lambda x: 1e-12 * x * 2.0 * Ry * c),
+                  ('m', lambda x: 1.0 / (x * 2.0 * Ry)),
+                  ('cm', lambda x: 1e2 / (x * 2.0 * Ry)),
+                  ('mm', lambda x: 1e3 / (x * 2.0 * Ry)),
+                  ('um', lambda x: 1e6 / (x * 2.0 * Ry)),
+                  ('nm', lambda x: 1e9 / (x * 2.0 * Ry)),
+                  ('A', lambda x: 1e10 / (x * 2.0 * Ry)),
+                  ('pm', lambda x: 1e12 / (x * 2.0 * Ry)),
+                  ('fm', lambda x: 1e15 / (x * 2.0 * Ry)),
+                  ('m^-1', lambda x: x * 2.0 * Ry),
+                  ('cm^-1', lambda x: 1e-2 * x * 2.0 * Ry)])
 ## distance
-au_distance = dict({'m': (lambda x: x * a_0),
-                    'cm': (lambda x: x * a_0 * 1e2),
-                    'mm': (lambda x: x * a_0 * 1e3),
-                    'um': (lambda x: x * a_0 * 1e6),
-                    'nm': (lambda x: x * a_0 * 1e9),
-                    'A': (lambda x: x * a_0 * 1e10),
-                    'pm': (lambda x: x * a_0 * 1e12),
-                    'fm': (lambda x: x * a_0 * 1e15)})
+au_distance = dict([('m', lambda x: x * a_0),
+                    ('cm', lambda x: x * a_0 * 1e2),
+                    ('mm', lambda x: x * a_0 * 1e3),
+                    ('um', lambda x: x * a_0 * 1e6),
+                    ('nm', lambda x: x * a_0 * 1e9),
+                    ('A', lambda x: x * a_0 * 1e10),
+                    ('pm', lambda x: x * a_0 * 1e12),
+                    ('fm', lambda x: x * a_0 * 1e15)])

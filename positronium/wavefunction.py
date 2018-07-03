@@ -30,7 +30,7 @@ def radial_wf(n, l):
  
         > Quantum Mechanics of one and two electron atoms,
         > H. A. Bethe and E. E. Salpeter 1957
-        > page 15
+        > (page 15)
  
         Parameters
         ----------
@@ -57,13 +57,10 @@ def radial_wf(n, l):
 
 def wf(n, l, m):
     """ 
-        Solution to the Schrodinger equation for a 1 / r potential.  Similar to the hydrogen
-        wavefuntion but rescaled by a factor of 2 due to the reduced mass
-        of positronium, mu_Ps = m_e/ 2.0.
+        Solution to the Schrodinger equation for a 1/r potential.
 
         > Quantum Mechanics of one and two electron atoms,
         > H. A. Bethe and E. E. Salpeter 1957
-        > page 15
 
         Parameters
         ----------

@@ -16,11 +16,12 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
     "Topic :: Scientific/Engineering :: Physics", 
 ]
 
 setup(name='positronium',
-      version='0.1.9',
+      version='0.2.0',
       description='python tools pertaining to positronium',
       url='https://github.com/PositroniumSpectroscopy/positronium',
       author='Adam Deller',
