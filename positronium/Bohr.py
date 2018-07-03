@@ -4,57 +4,62 @@ The Bohr model of positronium
 '''
 from __future__ import print_function, division
 import numpy as np
-from . import constants
+from .constants import au_energy, au_distance
 
 def energy(n1=1, n2=float('inf'), **kwargs):
     '''
-    Calculate the interval between energy levels n1 and n2
-    according to the Bohr model, i.e., the Rydberg formula.
+        The energy interval between states n1 and n2.
 
-    kwargs:
-        unit:
-            J, eV, meV, ueV, au (Hartree),          [energy]
-            Hz, kHz, MHz, GHz, THz,                 [frequency]
-            m, cm, mm, um, nm, A, pm, fm,           [vacuum wavelength]
-            m^-1, cm^-1.                            [wavenumber]
+        Parameters
+        ----------
+        n1 : int
+            principal quantum number of state 1
+        n2 : int
+            principal quantum number of state 2
+        **kwargs:
+            unit="eV"
+                "J", "eV", "meV", "ueV", "au", "Hartree",     [energy]
+                "Hz", "kHz", "MHz", "GHz", "THz",             [frequency]
+                "m", "cm", "mm", "um", "nm", "A", "pm", "fm", [vacuum wavelength]
+                "m^-1", "cm^-1".                              [wavenumber]
 
-    defaults:
-        n1 = 1
-        n2 = infinity
-        unit='eV'
-
+        Returns
+        -------
+        float64
     '''
     unit = kwargs.get('unit', 'eV')
-    interval = 0.25 * (np.subtract(np.power(n1, -2.0),
-                                   np.power(n2, -2.0)))
-    if (unit == 'au') or (unit == 'Hartree'):
+    interval = 0.25 * (1.0 / n1**2.0 - 1.0 / n2**2.0)
+    if unit in ['au', 'Hartree']:
         return interval
-    elif unit in constants.au_energy:
-        return constants.au_energy[unit](interval)
+    elif unit in au_energy:
+        return au_energy[unit](interval)
     else:
         raise KeyError(unit + ' is not recognised as a suitable unit. See' + \
                               ' docstring for unit list.')
 
 def radius(n=1, **kwargs):
     '''
-    Return the Bohr radius for positronium (2 * a_0).
+        The Bohr radius.
 
-    kwargs:
-        unit:
-            m, cm, mm, um, nm, A, pm, fm, (SI)
-            au (Bohr).
+        Parameters
+        ----------
+        n : int
+            principal quantum number of the state
+        **kwargs
+            unit="m":
+                "au", "Bohr"
+                "m", "cm", "mm", "um", "nm", "A", "pm", "fm",
 
-    defaults:
-        n = 1
-        unit = 'm'
-
+        Returns
+        -------
+        float64
     '''
     unit = kwargs.get('unit', 'm')
-    rad = (2.0 * np.power(n, 2.0))
+    rad = 2.0 * n**2.0
     if (unit == 'au') or (unit == 'Bohr'):
         return rad
-    elif unit in constants.au_distance:
-        return constants.au_distance[unit](rad)
+    elif unit in au_distance:
+        return au_distance[unit](rad)
     else:
         raise KeyError(unit + ' is not recognised as a suitable unit. See' + \
                               ' docstring for unit list.')
