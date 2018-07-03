@@ -3,8 +3,6 @@
 Atomic state of positronium
 '''
 from __future__ import print_function, division
-from math import factorial
-from scipy.special import sph_harm, hyp1f1
 import numpy as np
 from . import constants, Ferrell
 
@@ -44,55 +42,6 @@ class Ps(object):
             raise ValueError("The total angular momentum quantum number 'J' " + \
                              "must be equal to S if l = 0.")
         return "ok"
-
-    # ------------------------
-    # Schrodinger wavefunction
-    # ------------------------
-
-    def Y_lm(self, theta, phi):
-        """ The angular part of the wavefunction, Y_lm(theta, phi).
-
-            quantum numbers:
-                l, m
-        """
-        return sph_harm(self.m, self.l, phi, theta)
-
-    def R_nl(self, r):
-        """ The radial part of the wavefunction, R_nl(r).
-
-            Quantum Mechanics of one and two electron atoms,
-            H. A. Bethe and E. E. Salpeter 1957
-
-                r in units of the Bohr radius, a_0.
-
-            quantum numbers:
-                n, l
-        """
-        rho = 1.0 * r / self.n           # re-scaled rho by 1/2 from hydrogen
-        epsilon = 1.0 / self.n
-        c1 = np.sqrt(factorial(self.n + self.l) / (2.0 * self.n * \
-                     factorial(self.n - self.l - 1))) * \
-            1.0/ (factorial(2.0 * self.l + 1.0))
-        c2 = np.power(2.0, -3.0/2.0)    # re-normalise again for Ps
-        return c1 * c2 * (2* epsilon)**(3.0/2.0) * np.exp(-0.5* rho) * rho**self.l *\
-               hyp1f1(-(self.n - self.l - 1), 2 * self.l + 2, rho)
-
-    def wavefunction_nlm(self, r, theta, phi):
-        """ wavefunction_nlm(r, theta, phi) = R_nl (r) * Y_lm (theta, phi)
-
-            Solution to the Schrodinger equation.  Similar to the hydrogen
-            wavefuntion but rescaled by a factor of 2 due to the reduced mass
-            of positronium, mu = m_e/ 2.0.
-
-            Quantum Mechanics of one and two electron atoms,
-            H. A. Bethe and E. E. Salpeter 1957
-
-                r in units of the Bohr radius, a_0.
-
-            quantum numbers:
-                n, l, m
-        """
-        return self.R_nl(r) * self.Y_lm(theta, phi)
 
     # ------
     # energy

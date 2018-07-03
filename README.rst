@@ -3,8 +3,8 @@ positronium
 
 python tools pertaining to positronium
 
-Prerequisites
--------------
+Dependencies
+------------
 
 Tested using Anaconda (Continuum Analytics) with Python 2.7 and 3.5.
 Examples written using IPython 4.0.1 (python 3.5.1 kernel).
