@@ -11,7 +11,7 @@ Examples written using IPython 4.0.1 (python 3.5.1 kernel).
 
 Package dependencies:
 
--  scipy, numpy
+-  scipy, numpy, attrs
 
 IPython examples dependencies:
 
@@ -123,9 +123,7 @@ The final line opens a url to the source journal.
 Bohr
 ~~~~
 
-Can be used to calculate the principle energy levels of positronium,
-or the interval between two levels. The default unit is 'eV', however,
-this can be changed using the keyword argument 'unit'.
+Estimate the principle energy levels of positronium using the Rydberg formula.
 
 For instance, the UV wavelength (in nm) needed to excite the Lyman-alpha
 transition can be found by:
