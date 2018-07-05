@@ -1,9 +1,14 @@
 #! python
 '''
 Physical constants
+
 '''
 from __future__ import print_function, division
+from math import floor, log10
 import webbrowser
+
+metric_prefix = dict([(18, 'E'), (15, 'P'), (12, 'T'), (9, 'G'),(6, 'M'), (3, 'k'), (0, ''),
+                      (-3, 'm'), (-6, 'u'), (-9, 'n'), (-12, 'p'), (-15, 'f'), (-18, 'a')])
 
 #CODATA 2014, DOI: 10.1103/RevModPhys.88.035009
 c = 299792458.0 ## speed of light in vacuum
@@ -22,11 +27,31 @@ mu_B = e * hbar / (2.0 * m_e)
 # Ps
 mass_Ps = m_Ps  = 2.0 * m_e
 reduced_mass_Ps = mu_Ps = m_e/ 2.0
+mu_me = 0.5
 Rydberg_Ps = Ry_Ps = Ry / 2.0
 a_Ps = 2.0 * a_0
 
 class MeasuredValue(float):
-    ''' subclass of built-in type float'''
+    """ subclass of built-in type float
+    
+        Parameters
+        ----------
+        value : float
+        uncertainty : float
+        unit : str
+
+        Attributes
+        ----------
+        source : str
+            source reference
+        url : str
+            url to source
+
+        Methods
+        -------
+        article()
+            opens source url in a web browser
+    """
     def __new__(cls, value, uncertainty, unit):
         measured = float.__new__(cls, value)
         measured.value = value
@@ -35,6 +60,20 @@ class MeasuredValue(float):
         measured.source = None
         measured.url = None
         return measured
+
+    def __str__(self):
+        ''' format for print() by rounding the uncertainty to 2 significant figures and 
+            rescaling value by nearest metric prefix.
+        '''
+        exp = floor(log10(abs(self.value)))
+        si = 3 * floor(exp / 3.0)
+        if si not in metric_prefix:
+            si = 0
+        scale = 10**(-si)
+        dp = -floor(log10(abs(self.uncertainty * scale))) + 1
+        uncertainty_str = format(self.uncertainty * scale, '.{}f'.format(dp))
+        value_str = format(self.value * scale, '.%df'%dp)
+        return u"{} \u00B1 {} {}{}".format(value_str, uncertainty_str, metric_prefix[si], self.unit)
 
     def article(self):
         ''' open url to constant reference'''
