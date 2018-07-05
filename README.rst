@@ -159,7 +159,7 @@ This `attrs <http://www.attrs.org/>`_ class can be used to represent a particula
 positronium using the quantum numbers
 
 +-----+----------------------------+
-| n   | principle                  |
+| n   | principal                  |
 +-----+----------------------------+
 | l   | orbital angular momentum   |
 +-----+----------------------------+
