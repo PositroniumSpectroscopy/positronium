@@ -163,8 +163,6 @@ positronium using the quantum numbers
 +-----+----------------------------+
 | l   | orbital angular momentum   |
 +-----+----------------------------+
-| m   | magnetic quantum number    |
-+-----+----------------------------+
 | S   | total spin                 |
 +-----+----------------------------+
 | J   | total angular momentum     |
