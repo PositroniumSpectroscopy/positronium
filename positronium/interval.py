@@ -1,6 +1,6 @@
 #! python
 """ 
-    (approx) transition intervals between two states.
+    (approx) transition intervals between two Ps states.
 """ 
 from .constants import En_h, h, c
 
