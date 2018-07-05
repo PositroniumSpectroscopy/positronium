@@ -29,7 +29,7 @@ setup(name='positronium',
       license='BSD',
       packages=['positronium'],
       install_requires=[
-          'scipy>0.14', 'numpy>1.10',
+          'scipy>0.14', 'numpy>1.10', 'attrs>17.3'
       ],
       include_package_data=True,
       classifiers=CLASSIFIERS,

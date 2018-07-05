@@ -1,6 +1,6 @@
 #! python
 """ 
-    Energy intervals
+    (approx) transition intervals between two states.
 """ 
 from .constants import En_h, h, c
 
